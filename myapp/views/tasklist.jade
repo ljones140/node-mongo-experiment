@@ -1,0 +1,19 @@
+extends layout
+
+block content
+ h1= title
+   form#formAddTask(name="addtask", method="post", action="/addtask")
+    input#inputTaskName(type="text", placeholder="taskname", name="taskname")
+    input#inputTag(type="text", placeholder="tag", name="tag")
+    button#btnSubmit(type="submit") submit
+
+  ul
+  each task, i in tasklist
+    li #{task.taskname} #{task.tag}
+    button.btnEdit(type="submit" value=task._id) edit
+
+  form#edittask(name="edittask", method="post", action="/edit-task")
+    input#inputTaskName(type="text", placeholder="taskname", name="taskname")
+    input#inputTag(type="text", placeholder="tag", name="tag")
+    input#ourValue(type="text", placeholder="tag", name="taskid")
+    button#btnSubmit(type="submit") submit

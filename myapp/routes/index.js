@@ -54,4 +54,67 @@ router.post('/adduser', function(req, res) {
 
 });
 
+router.get('/tasks', function(req, res, next) {
+  // res.render('tasklist', {title: 'task list'})
+  var db = req.db;
+  var collection = db.get('tagcollection');
+  collection.find({}, {}, function(e,docs){
+    res.render('tasklist', {
+      "tasklist" : docs
+    });
+  });
+});
+
+
+router.post('/addtask', function(req, res, next) {
+
+  var db = req.db;
+
+  var taskname = req.body.taskname;
+  var tag = req.body.tag;
+
+  var collection = db.get('tagcollection');
+
+  collection.insert({
+    "taskname" : taskname,
+    "tag" : tag
+  }, function(err, doc) {
+    if (err) {
+      res.send("There was a problem inserting to the database");
+    }
+    else {
+      res.redirect("tasks");
+    }
+  });
+
+});
+
+router.post('/edit-task', function(req, res, next) {
+  var db = req.db;
+
+  var taskname = req.body.taskname;
+  var tag = req.body.tag;
+  var id = req.body.taskid;
+
+  var collection = db.get('tagcollection');
+
+  collection.update (
+    { _id: id },
+    { $set:
+      {
+        "taskname" : taskname,
+        "tag" : tag
+      }
+    }, function(err, doc) {
+      if (err) {
+        res.send("There was a problem inserting to the database");
+      }
+      else {
+        res.redirect("tasks");
+
+    }
+  });
+
+});
+
 module.exports = router;
