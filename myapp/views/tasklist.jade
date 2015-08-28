@@ -7,20 +7,13 @@ block content
     input#inputTag(type="text", placeholder="tag", name="tag")
     select#user(name="userid")
       each user, i in userlist
-        option(value=user._id) User #{user.username}
+        option(value=user._id) #{user.username}
     button#btnSubmit(type="submit") submit
 
-  ul
-  each user, i in userlist
-    li #{user.username} #{user.taskname}
-    button.btnEdit(type="submit" value=user._id) edit
-
-  form#edittask(name="edittask", method="post", action="/edit-task")
-    input#inputTaskName(type="text", placeholder="taskname", name="taskname")
-    input#inputTag(type="text", placeholder="tag", name="tag")
-    input#ourValue(type="text", placeholder="tag", name="taskid")
-    input#user(type="text", placeholder="user", name="user")
-    select#user(name="userid")
-      each user, i in userlist
-        option(value=user._id) User #{user.username}
-    button#btnSubmit(type="submit") submit
+  table
+    tbody
+    each user, i in userlist
+      tr
+        td #{user.username}
+        td #{user.taskname}
+        td #{user.tag}
