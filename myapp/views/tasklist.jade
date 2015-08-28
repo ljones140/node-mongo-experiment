@@ -5,15 +5,21 @@ block content
    form#formAddTask(name="addtask", method="post", action="/addtask")
     input#inputTaskName(type="text", placeholder="taskname", name="taskname")
     input#inputTag(type="text", placeholder="tag", name="tag")
+    select#user(name="user")
+      option(value='volvo') Volvo
+      option(value='saab') Saab
+      option(value='mercedes') Mercedes
+      option(value='audi') Audi
     button#btnSubmit(type="submit") submit
 
   ul
   each task, i in tasklist
-    li #{task.taskname} #{task.tag}
+    li #{task.taskname} #{task.tag} #{task.user}
     button.btnEdit(type="submit" value=task._id) edit
 
   form#edittask(name="edittask", method="post", action="/edit-task")
     input#inputTaskName(type="text", placeholder="taskname", name="taskname")
     input#inputTag(type="text", placeholder="tag", name="tag")
     input#ourValue(type="text", placeholder="tag", name="taskid")
+    input#user(type="text", placeholder="user", name="user")
     button#btnSubmit(type="submit") submit

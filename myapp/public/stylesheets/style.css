@@ -7,6 +7,8 @@ a {
   color: #00B7FF;
 }
 
-#edittask {
+#edittask, #ourValue {
   display: none;
 }
+
+

@@ -58,6 +58,10 @@ router.get('/tasks', function(req, res, next) {
   // res.render('tasklist', {title: 'task list'})
   var db = req.db;
   var collection = db.get('tagcollection');
+  var usercollection = db.get('usercollection');
+
+  // res.render('tasklist', { tasklist: tasks , users: users});
+
   collection.find({}, {}, function(e,docs){
     res.render('tasklist', {
       "tasklist" : docs
@@ -72,12 +76,14 @@ router.post('/addtask', function(req, res, next) {
 
   var taskname = req.body.taskname;
   var tag = req.body.tag;
+  var user = req.body.user;
 
   var collection = db.get('tagcollection');
 
   collection.insert({
     "taskname" : taskname,
-    "tag" : tag
+    "tag" : tag,
+    "user" : user
   }, function(err, doc) {
     if (err) {
       res.send("There was a problem inserting to the database");
@@ -95,6 +101,7 @@ router.post('/edit-task', function(req, res, next) {
   var taskname = req.body.taskname;
   var tag = req.body.tag;
   var id = req.body.taskid;
+  var user = req.body.user;
 
   var collection = db.get('tagcollection');
 
@@ -103,7 +110,8 @@ router.post('/edit-task', function(req, res, next) {
     { $set:
       {
         "taskname" : taskname,
-        "tag" : tag
+        "tag" : tag,
+        "user" : user
       }
     }, function(err, doc) {
       if (err) {
@@ -111,7 +119,6 @@ router.post('/edit-task', function(req, res, next) {
       }
       else {
         res.redirect("tasks");
-
     }
   });
 
